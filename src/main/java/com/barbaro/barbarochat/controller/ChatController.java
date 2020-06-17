@@ -19,20 +19,15 @@ import lombok.AllArgsConstructor;
 public class ChatController {
 	
 	private ChatRoomService chatRoomService;
-
-	@MessageMapping("/publish") /* Endpoint - client */
-	@SendTo("/topic/chatbarbaro")
-	public Message publishMessage(Message message) {
-		return message;
-	}
-	
-	@MessageMapping("/disconnect")
-	public void actionDisconnect(ChatRoomUser user) {
-		chatRoomService.leaveChatRoom(user);
-	}
 	
 	@SubscribeMapping("/connected.users")
 	public List<ChatRoomUser> listConnectedUsersOnSubscribe() {
 		return chatRoomService.findAllChatRoomUsers();
+	}
+		
+	@MessageMapping("/publish") /* Endpoint - client */
+	@SendTo("/topic/chatroom")
+	public Message publishMessage(Message message) {
+		return message;
 	}
 }

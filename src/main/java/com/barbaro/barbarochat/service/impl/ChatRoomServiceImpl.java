@@ -1,5 +1,6 @@
 package com.barbaro.barbarochat.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -33,7 +34,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
 	@Override
 	public void notifylistConnectedChatRoomUsers() {
-		webSocketMessagingTemplate.convertAndSend("/connected.users", findAllChatRoomUsers());
+		webSocketMessagingTemplate.convertAndSend("/topic/connected.users", findAllChatRoomUsers());
 	}
 
 	@Override
@@ -43,8 +44,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
 	private static class ChatRoomDatabase {
 		
-		private List<ChatRoomUser> listConnectedUsers = new CopyOnWriteArrayList<>();
-		
+		//private List<ChatRoomUser> listConnectedUsers = new CopyOnWriteArrayList<>();
+		private List<ChatRoomUser> listConnectedUsers = new ArrayList<>();
+				
 		private void addChatRoomUser(ChatRoomUser user) {
 			listConnectedUsers.add(user);
 		}

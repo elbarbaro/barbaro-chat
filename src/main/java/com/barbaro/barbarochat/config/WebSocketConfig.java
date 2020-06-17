@@ -2,9 +2,11 @@ package com.barbaro.barbarochat.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.w3c.dom.views.AbstractView;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -12,16 +14,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/topic", "/connected.users");
+		config.enableSimpleBroker("/queue/", "/topic/");
 		config.setApplicationDestinationPrefixes("/app");
 	}
 	
 	
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/publish");
-		registry.addEndpoint("/publish")
-		.setAllowedOrigins("*")
+		//registry.addEndpoint("/barbarochat");
+		registry.addEndpoint("/barbarochat")
+		/*.setAllowedOrigins("*")*/
 		.withSockJS();
 	}
 }
